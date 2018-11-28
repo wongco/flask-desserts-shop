@@ -1,5 +1,4 @@
 """Dessert class for RESTful JSON API"""
-from flask import Flask, request, session
 
 
 class Dessert:

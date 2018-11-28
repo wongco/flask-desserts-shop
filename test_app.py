@@ -1,6 +1,7 @@
 from unittest import TestCase
 from app import app
 from desserts import dessert_list, Dessert
+from flask import session
 
 
 class FlaskTests(TestCase):
@@ -122,3 +123,18 @@ class FlaskTests(TestCase):
         response = self.client.delete('/desserts/1')
         self.assertEqual(response.status_code, 404)
         self.assertIn(b'Dessert not found.', response.data)
+
+    def test_get_total_calories(self):
+        """Make sure that the total calories request succeeds"""
+
+        with self.client:
+            response = self.client.post('/desserts/1/eat')
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(session.get('total_calories', 0), 200)
+            response = self.client.post('/desserts/7/eat')
+            self.assertEqual(response.status_code, 404)
+            self.assertIn(b'Dessert not found.', response.data)
+            response = self.client.post('/desserts/2/eat')
+            self.assertEqual(session.get('total_calories', 0), 800)
+            response = self.client.post('/desserts/3/eat')
+            self.assertEqual(session.get('total_calories', 0), 1100)

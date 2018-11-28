@@ -1,7 +1,8 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, session
 from desserts import dessert_list
 
 app = Flask(__name__)
+app.secret_key = "RANDOM KEY"
 
 
 @app.route("/")
@@ -73,3 +74,22 @@ def delete_dessert(id):
     removed_dessert = dessert_list.desserts.pop(remove_index)
 
     return jsonify(removed_dessert.serialize())
+
+
+@app.route("/desserts/<int:id>/eat", methods=["POST"])
+def get_total_calories(id):
+    """ get total calories eaten by user """
+
+    try:
+        sel_dessert = dessert_list.find(id)
+    except ValueError:
+        return render_template("404.html"), 404
+
+    # retrieve session info, store updated info
+    total_calories = session.get('total_calories', 0)
+    total_calories += sel_dessert.calories
+    session['total_calories'] = total_calories
+
+    return jsonify({
+        "total_calories": total_calories
+    })
