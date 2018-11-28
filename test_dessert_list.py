@@ -61,3 +61,4 @@ class DessertListTests(TestCase):
         self.assertEqual(self.sample_list.find(
             1).description, "C is for cookie, that's good enough for me")
         self.assertEqual(self.sample_list.find(1).calories, 20)
+        self.assertRaises(ValueError, self.sample_list.find, 7)

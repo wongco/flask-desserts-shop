@@ -65,8 +65,11 @@ class DessertList:
     def find(self, id):
         """Find a dessert based on a given id and return dessert"""
 
-        return [
-            dessert for dessert in self.desserts if dessert.id == id][0]
+        result = [
+            dessert for dessert in self.desserts if dessert.id == id]
+        if not result:
+            raise ValueError(f"No dessert with an id of {id} exists.")
+        return result[0]
 
 
 # make a dessert list and put some desserts in it
