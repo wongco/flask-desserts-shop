@@ -86,6 +86,8 @@ class FlaskTests(TestCase):
         self.assertEqual(response.json['description'],
                          "C is for cookie, that's good enough for me")
         self.assertEqual(response.json['calories'], 200)
+        response = self.client.get('/desserts/7')
+        self.assertEqual(response.status_code, 404)
 
     def test_patch_desserts(self):
         """Make sure that the patch request succeeds"""
@@ -99,6 +101,12 @@ class FlaskTests(TestCase):
         self.assertEqual(response.json['name'], 'HotCookie')
         self.assertEqual(response.json['description'], 'Delicious')
         self.assertEqual(response.json['calories'], 40)
+        response = self.client.patch('/desserts/7', json={
+            "name": "HotCookie",
+            "description": "Delicious",
+            "calories": 40
+        })
+        self.assertEqual(response.status_code, 404)
 
     def test_delete_desserts(self):
         """Make sure that the delete request succeeds"""
@@ -109,3 +117,5 @@ class FlaskTests(TestCase):
         self.assertEqual(response.json['description'],
                          "C is for cookie, that's good enough for me")
         self.assertEqual(response.json['calories'], 200)
+        response = self.client.delete('/desserts/1')
+        self.assertEqual(response.status_code, 404)
