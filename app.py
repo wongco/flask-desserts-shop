@@ -42,7 +42,7 @@ def modify_dessert(id):
     """ Modify Dessert Details """
 
     id = int(id)
-    # retreieve targeted dessert details
+    # retreieve selected dessert details
     sel_dessert = [
         dessert for dessert in dessert_list.desserts if dessert.id == id][0]
 

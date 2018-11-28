@@ -76,3 +76,16 @@ class FlaskTests(TestCase):
         self.assertEqual(response.json['name'], 'Cookie')
         self.assertEqual(response.json['description'], 'yummy')
         self.assertEqual(response.json['calories'], 3)
+
+    def test_patch_desserts(self):
+        """Make sure that the patch request succeeds"""
+
+        response = self.client.patch('/desserts/1', json={
+            "name": "HotCookie",
+            "description": "Delicious",
+            "calories": 40
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['name'], 'HotCookie')
+        self.assertEqual(response.json['description'], 'Delicious')
+        self.assertEqual(response.json['calories'], 40)
