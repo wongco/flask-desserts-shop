@@ -34,7 +34,7 @@ def get_specific_dessert(id):
     try:
         sel_dessert = dessert_list.find(id)
     except ValueError:
-        return render_template("index.html"), 404
+        return render_template("404.html"), 404
 
     return jsonify(sel_dessert.serialize())
 
@@ -46,7 +46,7 @@ def modify_dessert(id):
     try:
         sel_dessert = dessert_list.find(id)
     except ValueError:
-        return render_template("index.html"), 404
+        return render_template("404.html"), 404
 
     # obtain body json data from user patch
     user_data = request.json
@@ -64,7 +64,7 @@ def delete_dessert(id):
     try:
         sel_dessert = dessert_list.find(id)
     except ValueError:
-        return render_template("index.html"), 404
+        return render_template("404.html"), 404
 
     # find index of dessert needing to be removed
     remove_index = dessert_list.desserts.index(sel_dessert)

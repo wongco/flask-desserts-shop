@@ -30,35 +30,35 @@ class FlaskTests(TestCase):
             # test that the status code is a 200
             self.assertEqual(response.status_code, 200)
             # test that there's a table in the response data
-            self.assertIn(b'<table>', response.data)
+            self.assertIn(b'table', response.data)
             # test that the description for each endpoint is in the response data
             # e.g. 'JSON data of all desserts' should be in the response data,
             # 'Adds a new dessert to our list' should be in the response data,
             # etc.
             self.assertIn(
-                b'<td>JSON data of all desserts</td>', response.data,
+                b'JSON data of all desserts', response.data,
                 "Don't forget to make a GET /desserts Endpoint Description")
             self.assertIn(
-                b'<td>Adds a new dessert to our list (returns data on the new dessert)</td>',
+                b'Adds a new dessert to our list (returns data on the new dessert)',
                 response.data,
                 "Don't forget to make a POST /desserts Endpoint Description")
             self.assertIn(
-                b'<td>JSON data on a single dessert</td>', response.data,
+                b'JSON data on a single dessert', response.data,
                 "Don't forget to make a GET /desserts/<id> Endpoint Description"
             )
             self.assertIn(
-                b'<td>Update an existing dessert (returns data on the updated dessert)</td>',
+                b'Update an existing dessert (returns data on the updated dessert)',
                 response.data,
                 "Don't forget to make a PATCH /desserts/<id> Endpoint Description"
             )
             self.assertIn(
-                b'<td>Removes a dessert from our list (returns data on the deleted dessert)</td>',
+                b'Removes a dessert from our list (returns data on the deleted dessert)',
                 response.data,
                 "Don't forget to make a DELETE /desserts/<id> Endpoint Description"
             )
 
     def test_get_all_desserts(self):
-        """Make sure that the get request is returning correct JSON"""
+        """Make sure that the get request succeeds"""
         response = self.client.get('/desserts')
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.json, list)
@@ -88,6 +88,7 @@ class FlaskTests(TestCase):
         self.assertEqual(response.json['calories'], 200)
         response = self.client.get('/desserts/7')
         self.assertEqual(response.status_code, 404)
+        self.assertIn(b'Dessert not found.', response.data)
 
     def test_patch_desserts(self):
         """Make sure that the patch request succeeds"""
@@ -107,6 +108,7 @@ class FlaskTests(TestCase):
             "calories": 40
         })
         self.assertEqual(response.status_code, 404)
+        self.assertIn(b'Dessert not found.', response.data)
 
     def test_delete_desserts(self):
         """Make sure that the delete request succeeds"""
@@ -119,3 +121,4 @@ class FlaskTests(TestCase):
         self.assertEqual(response.json['calories'], 200)
         response = self.client.delete('/desserts/1')
         self.assertEqual(response.status_code, 404)
+        self.assertIn(b'Dessert not found.', response.data)
