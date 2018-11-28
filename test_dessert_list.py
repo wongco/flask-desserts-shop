@@ -47,3 +47,17 @@ class DessertListTests(TestCase):
                          0]['description'], self.sample_list.desserts[0].description)
         self.assertEqual(self.sample_list.serialize()[
                          0]['calories'], self.sample_list.desserts[0].calories)
+
+    def test_find(self):
+        """Test the find method for DessertList"""
+
+        self.sample_list.add("Chocolate chip cookie",
+                             "C is for cookie, that's good enough for me", 20)
+
+        self.assertIsInstance(self.sample_list.find(1), Dessert)
+        self.assertEqual(self.sample_list.find(1).id, 1)
+        self.assertEqual(self.sample_list.find(
+            1).name, "Chocolate chip cookie")
+        self.assertEqual(self.sample_list.find(
+            1).description, "C is for cookie, that's good enough for me")
+        self.assertEqual(self.sample_list.find(1).calories, 20)

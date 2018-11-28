@@ -62,6 +62,12 @@ class DessertList:
 
         return [dessert.serialize() for dessert in self.desserts]
 
+    def find(self, id):
+        """Find a dessert based on a given id and return dessert"""
+
+        return [
+            dessert for dessert in self.desserts if dessert.id == id][0]
+
 
 # make a dessert list and put some desserts in it
 dessert_list = DessertList()
