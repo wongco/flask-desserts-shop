@@ -7,12 +7,13 @@ app.secret_key = "RANDOM KEY"
 
 @app.route("/")
 def home():
-    """Return home page with basic info"""
+    """ Return home page with basic info """
     return render_template("index.html")
 
 
 @app.route("/desserts")
 def get_all_desserts():
+    """ Gets all desserts info """
     return jsonify(dessert_list.serialize())
 
 
@@ -20,7 +21,7 @@ def get_all_desserts():
 def add_dessert():
     """ Add new dessert and post reply """
 
-    # obtain body json data from user patch
+    # obtain body json data from user post
     user_data = request.json
     dessert_list.add(user_data['name'],
                      user_data['description'], user_data['calories'])
