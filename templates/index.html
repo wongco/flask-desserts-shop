@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Flask Ice Cream Shope</title>
+</head>
+<body>
+  <h1>Welcome to the Ice Cream Shop!</h1>
+  <p>All other endpoints in this app form a JSON API.</p>
+  <p>Here are all of the endpoints available to you:</p>
+  <table>
+    <thead>
+      <tr>
+        <td>Method</td>
+        <td>Path</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>GET</td>
+        <td><code>/desserts</code></td>
+        <td>JSON data of all desserts</td>
+      </tr>
+      <tr>
+        <td>POST</td>
+        <td><code>/desserts</code></td>
+        <td>Adds a new dessert to our list (returns data on the new dessert)</td>
+      </tr>
+      <tr>
+        <td>GET</td>
+        <td><code>/desserts/&lt;id&gt;</code></td>
+        <td>JSON data on a single dessert</td>
+      </tr>
+      <tr>
+        <td>PATCH</td>
+        <td><code>/desserts/&lt;id&gt;</code></td>
+        <td>Update an existing dessert (returns data on the updated dessert)</td>
+      </tr>
+      <tr>
+        <td>DELETE</td>
+        <td><code>/desserts/&lt;id&gt;</code></td>
+        <td>Removes a dessert from our list (returns data on the deleted dessert)</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
