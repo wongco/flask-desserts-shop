@@ -11,13 +11,15 @@ def home():
 
 
 @app.route("/desserts")
-def show_desserts():
+def get_all_desserts():
     return jsonify(dessert_list.serialize())
 
 
 @app.route("/desserts", methods=["POST"])
-def post_desserts():
+def add_dessert():
     """ Add new dessert and post reply """
+
+    # obtain body json data from user patch
     user_data = request.json
     dessert_list.add(user_data['name'],
                      user_data['description'], user_data['calories'])
@@ -25,11 +27,11 @@ def post_desserts():
     return jsonify(dessert_list.desserts[-1].serialize())
 
 
-@app.route("/desserts/<id>")
-def show_dessert(id):
+@app.route("/desserts/<int:id>")
+def get_specific_dessert(id):
     """Display data on specific dessert id"""
 
-    id = int(id)
+    # id = int(id)
     # retreieve targeted dessert details
     sel_dessert = [
         dessert for dessert in dessert_list.desserts if dessert.id == id][0]
@@ -37,18 +39,36 @@ def show_dessert(id):
     return jsonify(sel_dessert.serialize())
 
 
-@app.route("/desserts/<id>", methods=["PATCH"])
+@app.route("/desserts/<int:id>", methods=["PATCH"])
 def modify_dessert(id):
     """ Modify Dessert Details """
 
-    id = int(id)
+    # id = int(id)
     # retreieve selected dessert details
     sel_dessert = [
         dessert for dessert in dessert_list.desserts if dessert.id == id][0]
 
+    # obtain body json data from user patch
     user_data = request.json
 
     sel_dessert.modify(
         user_data['name'], user_data['description'], user_data['calories'])
 
     return jsonify(sel_dessert.serialize())
+
+
+@app.route("/desserts/<int:id>", methods=["DELETE"])
+def delete_dessert(id):
+    """ Modify Dessert Details """
+
+    # retreieve selected dessert details
+    sel_dessert = [
+        dessert for dessert in dessert_list.desserts if dessert.id == id][0]
+
+    # find index of dessert needing to be removed
+    remove_index = dessert_list.desserts.index(sel_dessert)
+
+    # remove dessert from list and place into variable
+    removed_dessert = dessert_list.desserts.pop(remove_index)
+
+    return jsonify(removed_dessert.serialize())

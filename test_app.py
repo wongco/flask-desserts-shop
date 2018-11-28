@@ -57,14 +57,14 @@ class FlaskTests(TestCase):
                 "Don't forget to make a DELETE /desserts/<id> Endpoint Description"
             )
 
-    def test_get_desserts(self):
+    def test_get_all_desserts(self):
         """Make sure that the get request is returning correct JSON"""
         response = self.client.get('/desserts')
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.json, list)
         self.assertEqual(response.json, dessert_list.serialize())
 
-    def test_post_desserts(self):
+    def test_add_dessert(self):
         """Make sure that the post request succeeds"""
 
         response = self.client.post('/desserts', json={
@@ -76,6 +76,16 @@ class FlaskTests(TestCase):
         self.assertEqual(response.json['name'], 'Cookie')
         self.assertEqual(response.json['description'], 'yummy')
         self.assertEqual(response.json['calories'], 3)
+
+    def test_get_specific_dessert(self):
+        """Make sure that the post request succeeds"""
+
+        response = self.client.get('/desserts/1')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['name'], 'Chocolate chip cookie')
+        self.assertEqual(response.json['description'],
+                         "C is for cookie, that's good enough for me")
+        self.assertEqual(response.json['calories'], 200)
 
     def test_patch_desserts(self):
         """Make sure that the patch request succeeds"""
@@ -89,3 +99,13 @@ class FlaskTests(TestCase):
         self.assertEqual(response.json['name'], 'HotCookie')
         self.assertEqual(response.json['description'], 'Delicious')
         self.assertEqual(response.json['calories'], 40)
+
+    def test_delete_desserts(self):
+        """Make sure that the delete request succeeds"""
+
+        response = self.client.delete('/desserts/1')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['name'], 'Chocolate chip cookie')
+        self.assertEqual(response.json['description'],
+                         "C is for cookie, that's good enough for me")
+        self.assertEqual(response.json['calories'], 200)

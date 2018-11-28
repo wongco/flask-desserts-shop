@@ -15,9 +15,11 @@ class DessertListTests(TestCase):
         """Test the __repr__ method for DessertList"""
         self.sample_list.add("Chocolate chip cookie",
                              "C is for cookie, that's good enough for me", 20)
-        self.assertIn(f'id', repr(self.sample_list))
-        self.assertIn(f'name', repr(self.sample_list))
-        self.assertIn(f'calories', repr(self.sample_list))
+        self.assertIn('id', repr(self.sample_list))
+        self.assertIn('name', repr(self.sample_list))
+        self.assertIn('calories', repr(self.sample_list))
+        self.assertEqual(
+            '<Dessert id=1 name="Chocolate chip cookie" calories=20>\n', repr(self.sample_list))
 
     def test_add(self):
         """Test the add method for DessertList"""
