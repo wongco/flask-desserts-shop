@@ -79,7 +79,7 @@ class FlaskTests(TestCase):
         self.assertEqual(response.json['calories'], 3)
 
     def test_get_specific_dessert(self):
-        """Make sure that the post request succeeds"""
+        """Make sure that the get request succeeds"""
 
         response = self.client.get('/desserts/1')
         self.assertEqual(response.status_code, 200)
@@ -120,7 +120,7 @@ class FlaskTests(TestCase):
         self.assertEqual(response.json['description'],
                          "C is for cookie, that's good enough for me")
         self.assertEqual(response.json['calories'], 200)
-        response = self.client.delete('/desserts/1')
+        response = self.client.delete('/desserts/7')
         self.assertEqual(response.status_code, 404)
         self.assertIn(b'Dessert not found.', response.data)
 
